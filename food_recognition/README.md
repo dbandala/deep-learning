@@ -2,13 +2,45 @@
 
 A real-time food recognition and calorie estimation application using PyTorch and computer vision.
 
+## ⚠️ Real-Time Detection System
+
+**This implementation provides real-time food detection using computer vision.**
+
+### Detection Approach
+
+The current system uses advanced computer vision techniques:
+
+1. **Color Analysis**: Multi-range HSV color detection for different food types
+2. **Shape Analysis**: Circularity and aspect ratio analysis for food identification  
+3. **Contour Detection**: Morphological operations and contour analysis
+4. **Confidence Scoring**: Multi-factor confidence calculation based on shape and size
+
+### Real-Time Features
+
+- **Live Camera Feed**: Processes camera input in real-time
+- **Advanced CV Algorithms**: Uses OpenCV for robust detection
+- **Multiple Food Types**: Detects 8+ food categories
+- **Shape Characteristics**: Analyzes geometric properties for accuracy
+- **No Training Required**: Works immediately with computer vision
+
+### For Machine Learning Approach
+
+To create an ML-based food recognition system, you would need to:
+
+1. **Fine-tune on food data**: Use a dataset like Food-101
+2. **Transfer learning**: Keep pretrained features, train only classifier
+3. **Use food-specific models**: Download models already trained on food
+
+See `MODEL_APPROACHES.md` for detailed ML implementation strategies.
+
 ## Features
 
-- **Real-time Food Detection**: Uses your camera to detect food items in real-time
+- **Real-time Food Detection**: Uses computer vision to detect food items in real-time
+- **Advanced CV Algorithms**: Color analysis, shape detection, and contour analysis
 - **Calorie Estimation**: Estimates calories based on detected food and confidence levels
-- **Lightweight Model**: Uses MobileNetV3 for efficient inference
+- **No Training Required**: Uses computer vision techniques, works immediately
 - **Food Database**: Contains 25+ common food items with nutritional information
-- **Demo Mode**: Works even without camera for testing purposes
+- **Multiple Detection Methods**: Color-based and shape-based detection algorithms
 
 ## Installation
 
