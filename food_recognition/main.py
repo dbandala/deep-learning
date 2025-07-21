@@ -55,39 +55,24 @@ class FoodRecognitionDemo:
             "french_fries", "donut", "sandwich", "chicken_breast", "rice"
         ]
         
-    def demo_mode(self):
-        """Run in demo mode without camera."""
+    def get_detection_tips(self):
+        """Provide tips for better food detection."""
+        print("\n" + "=" * 60)
+        print("TIPS FOR BETTER FOOD DETECTION")
         print("=" * 60)
-        print("🍎 FOOD RECOGNITION CALORIE COUNTER - DEMO MODE 🍎")
+        print("🔍 Detection Tips:")
+        print("  • Ensure good lighting")
+        print("  • Place food on contrasting background")
+        print("  • Keep food item centered in camera view")
+        print("  • Avoid shadows and reflections")
+        print("  • Make sure food item is clearly visible")
+        print()
+        print("🍎 Best Results With:")
+        print("  • Single food items (not mixed plates)")
+        print("  • Well-lit environments")
+        print("  • Food items that match our color profiles")
+        print("  • Clear, unobstructed views")
         print("=" * 60)
-        print("\nThis demo simulates food detection and calorie estimation.")
-        print("In the full version, this would use your camera feed.")
-        print("\nPress Ctrl+C to exit\n")
-        
-        try:
-            while True:
-                # Simulate random food detection
-                food_name = random.choice(self.demo_foods)
-                confidence = random.uniform(0.3, 0.95)
-                
-                # Get calorie estimation
-                calories = self.calorie_estimator.estimate_calories(food_name, confidence)
-                
-                # Get detailed nutrition info
-                nutrition_info = self.calorie_estimator.get_nutrition_info(food_name, confidence)
-                
-                # Display results
-                print(f"🔍 Detected: {food_name.replace('_', ' ').title()}")
-                print(f"📊 Confidence: {confidence:.1%}")
-                print(f"🔥 Estimated Calories: {calories}")
-                print(f"📏 Typical Serving: {nutrition_info['typical_serving_g']}g")
-                print(f"📈 Calories per 100g: {nutrition_info['calories_per_100g']}")
-                print("-" * 40)
-                
-                time.sleep(2)  # Wait 2 seconds between detections
-                
-        except KeyboardInterrupt:
-            print("\n👋 Demo ended. Thank you!")
             
     def install_dependencies(self):
         """Install missing dependencies."""
@@ -120,7 +105,7 @@ class FoodRecognitionDemo:
         # Import the full app (only if dependencies are available)
         try:
             from food_recognition_app import FoodRecognitionApp
-            app = FoodRecognitionApp(camera_index=0, confidence_threshold=0.3)
+            app = FoodRecognitionApp(camera_index=0, confidence_threshold=0.6)
             app.run()
             return True
         except Exception as e:
@@ -150,17 +135,48 @@ class FoodRecognitionDemo:
         """Main entry point."""
         print("🚀 Starting Food Recognition Calorie Counter...")
         
-        # Check if we can run camera mode
-        if self.camera_mode():
-            return
-            
-        # Show food database
-        self.show_food_database()
+        # Show menu
+        print("\n" + "=" * 60)
+        print("FOOD RECOGNITION OPTIONS")
+        print("=" * 60)
+        print("1. Real-Time Camera Detection (computer vision)")
+        print("2. PyTorch Camera Demo (requires training for accuracy)")
+        print("3. Show Food Database")
+        print("4. Detection Tips")
+        print()
         
-        # Run demo mode
-        print("\n" + "=" * 50)
-        input("Press Enter to start demo mode...")
-        self.demo_mode()
+        choice = input("Enter your choice (1-4) or press Enter for option 1: ").strip()
+        
+        if choice == "2":
+            # Try PyTorch camera mode (will fall back if issues)
+            if self.camera_mode():
+                return
+            print("🎮 Falling back to real-time detection...")
+        elif choice == "3":
+            self.show_food_database()
+            return
+        elif choice == "4":
+            self.get_detection_tips()
+            input("\nPress Enter to continue...")
+            # Show the menu again
+            self.run()
+            return
+        
+        # Default: Real-time camera detection
+        try:
+            from simple_demo import SimpleFoodRecognitionDemo
+            real_time_demo = SimpleFoodRecognitionDemo()
+            real_time_demo.run()
+            return
+        except ImportError as e:
+            print(f"Real-time detection not available: {e}")
+            print("Please install opencv-python: pip install opencv-python")
+        except Exception as e:
+            print(f"Error running real-time detection: {e}")
+        
+        # Fallback: show database info
+        print("\nFalling back to food database information:")
+        self.show_food_database()
 
 
 def main():

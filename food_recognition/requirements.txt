@@ -5,8 +5,10 @@ opencv-python>=4.8.0
 
 # Deep Learning (PyTorch ecosystem)
 torchvision>=0.15.0
+ultralytics>=8.0.0  # For FastSAM segmentation
 
 # Image Processing
 numpy>=1.24.0
+matplotlib>=3.7.0  # For visualization
 
 # Note: torch and pillow are already included in the main pyproject.toml

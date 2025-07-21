@@ -50,6 +50,52 @@ class CalorieEstimator:
         
         return max(1, int(round(adjusted_calories)))
         
+    def estimate_calories_from_mask(self, food_name: str, mask: 'np.ndarray', 
+                                   frame_shape: tuple) -> int:
+        """
+        Estimate calories based on segmentation mask area.
+        
+        Args:
+            food_name (str): Name of the detected food
+            mask (np.ndarray): Segmentation mask
+            frame_shape (tuple): Shape of the original frame (height, width, channels)
+            
+        Returns:
+            int: Estimated calories based on relative size
+        """
+        import numpy as np
+        
+        if food_name == "unknown" or food_name == "No food detected":
+            return 0
+            
+        # Calculate mask area as fraction of total frame
+        mask_area = np.sum(mask > 0.5)
+        total_frame_area = frame_shape[0] * frame_shape[1]
+        area_fraction = mask_area / total_frame_area
+        
+        # Estimate serving size based on relative area
+        # Assumptions:
+        # - If food takes up 20%+ of frame: large serving (1.5x typical)
+        # - If food takes up 10-20% of frame: normal serving (1.0x typical)
+        # - If food takes up 5-10% of frame: small serving (0.7x typical)
+        # - If food takes up <5% of frame: very small serving (0.4x typical)
+        
+        if area_fraction >= 0.20:
+            serving_factor = 1.5
+            confidence = 0.8  # High confidence for large objects
+        elif area_fraction >= 0.10:
+            serving_factor = 1.0
+            confidence = 0.7  # Good confidence for normal sized objects
+        elif area_fraction >= 0.05:
+            serving_factor = 0.7
+            confidence = 0.6  # Medium confidence for small objects
+        else:
+            serving_factor = 0.4
+            confidence = 0.4  # Lower confidence for very small objects
+            
+        # Use existing method with calculated serving factor
+        return self.estimate_calories(food_name, confidence, serving_factor)
+        
     def _get_confidence_factor(self, confidence: float) -> float:
         """
         Calculate a factor based on detection confidence.
