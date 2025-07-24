@@ -18,7 +18,7 @@ def setup_fastsam():
     model = FastSAM('FastSAM-s.pt')  # or 'FastSAM-s.pt' for smaller/faster version
     return model
 
-def segment_everything(model, image_path, conf_threshold=0.4, iou_threshold=0.9):
+def segment_everything(model, image_path, conf_threshold=0.2, iou_threshold=0.5):
     """
     Segment all objects in an image using the standard ultralytics API
     
@@ -39,6 +39,8 @@ def segment_everything(model, image_path, conf_threshold=0.4, iou_threshold=0.9)
         imgsz=1024,
         conf=conf_threshold,
         iou=iou_threshold,
+        max_det=20,  # Limit to 20 detections
+        texts="food"  # Use "all" to segment all objects
     )
     
     return results
@@ -168,7 +170,7 @@ def main():
     model = setup_fastsam()
     
     # Image path - CHANGE THIS TO YOUR IMAGE
-    image_path = "1.jpg"  # Replace with your image path
+    image_path = "2.jpg"  # Replace with your image path
     
     # Check if image exists
     import os
