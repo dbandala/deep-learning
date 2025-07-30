@@ -197,7 +197,7 @@ class SelectiveObjectSegmentationApp:
                 # retina_masks=True,
                 imgsz=320,  # Higher resolution for better accuracy
                 conf=0.8,  # Higher confidence threshold for better precision
-                iou=0.25,  # Lower IoU for more inclusive detection
+                iou=0.35,  # Lower IoU for more inclusive detection
                 max_det=5,  # Limit detections for performance
                 #augment=True, # Test-time augmentation
                 texts=text_prompt,  # Specify target objects to detect

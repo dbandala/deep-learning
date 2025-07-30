@@ -411,7 +411,7 @@ class FoodRecognitionApp:
                 max_det=20,  # Allow more detections
                 augment=True, # Test-time augmentation
                 # Remove texts parameter to detect everything
-                texts="food"
+                texts="glasses"
             )
             
             detected_objects = []
