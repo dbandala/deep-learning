@@ -13,3 +13,22 @@ dist/
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
+
+# images
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.avif
+
+# deep learning models
+*.pth
+*.pt
+*.onnx
+*.h5
+*.ckpt
+*.pb
+*.tflite
+*.weights
+*.ckpt.index
+*.ckpt.data-00000-of-00001
